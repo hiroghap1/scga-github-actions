@@ -1,0 +1,38 @@
+form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+}
+label {
+}
+input[type="text"],
+input[type="password"] {
+    max-width: 300px;
+}
+.submit {
+    margin-top: 0!important;
+}
+hr {
+    margin-block: 20px;
+}
+#run-github-actions {
+    background: #2271b1;
+    border: 1px solid #2271b1;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+    font-size: 120%;
+    border-radius: 3px;
+    padding: 6px 16px;
+    cursor: pointer;
+}
+#run-github-actions:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+#run-github-actions[disabled] {
+    cursor: none;
+    pointer-events: none;
+    filter: brightness(0.7);
+}
