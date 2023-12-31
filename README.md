@@ -1,1 +1,1 @@
-# sc-github-actions
+# SC GitHub Actions
