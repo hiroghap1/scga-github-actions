@@ -4,6 +4,7 @@ Plugin Name: SC GitHub Actions
 Description: GitHub Actions を実行するボタンを設置します
 Version: 0.1.0
 Author: HASEGAWA Yoshihiro in Stella Create Inc.
+License: GPLv2
 */
 
 // ファイルを管理画面にロード

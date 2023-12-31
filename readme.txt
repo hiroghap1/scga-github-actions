@@ -4,9 +4,9 @@ Tags: github, githubactions
 Requires at least: 6.4
 Tested up to: 6.4.2
 Stable tag: 0.0.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 GitHub Actions run in WordPress Dashboard
 
@@ -50,3 +50,11 @@ Check out the official GitHub page.
 
 
 == Screenshots ==
+
+
+
+== License ==
+
+This plugin is licensed under the GNU General Public License v2.0 or later.
+
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
