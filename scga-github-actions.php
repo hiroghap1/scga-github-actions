@@ -1,24 +1,25 @@
 <?php
 /*
-Plugin Name: SC GitHub Actions
+Plugin Name: SCGA GitHub Actions
 Description: GitHub Actions を実行するボタンを設置します
-Version: 0.1.0
+Version: 0.0.1
 Author: HASEGAWA Yoshihiro in Stella Create Inc.
 License: GPLv2
 */
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // ファイルを管理画面にロード
-function load_github_actions_script() {
+function scga_load_github_actions_script() {
     // メニューページ 'github-actions' でのみスクリプトをロード
     if (isset($_GET['page']) && $_GET['page'] === 'github-actions') {
         wp_enqueue_style('github-actions-style', plugin_dir_url(__FILE__) . 'css/github-actions-style.css');
         wp_enqueue_script('github-actions-script', plugin_dir_url(__FILE__) . 'js/github-actions-script.js', array(), null, true);
     }
 }
-add_action('admin_enqueue_scripts', 'load_github_actions_script');
+add_action('admin_enqueue_scripts', 'scga_load_github_actions_script');
 
 // プラグインのメニューと設定ページを追加
-function add_github_actions_menu() {
+function scga_add_github_actions_menu() {
     add_menu_page(
         'GitHub Actions',
         'GitHub Actions',
@@ -28,7 +29,7 @@ function add_github_actions_menu() {
     );
 }
 // メニューを追加するアクションフック
-add_action('admin_menu', 'add_github_actions_menu');
+add_action('admin_menu', 'scga_add_github_actions_menu');
 
 function github_actions_settings_page() {
     ?>
@@ -66,7 +67,7 @@ function github_actions_settings_page() {
 }
 
 // GitHub Actions設定ページでの保存処理
-function github_actions_save_settings() {
+function scga_github_actions_save_settings() {
     if (isset($_POST['github_actions_token'])) {
         update_option('github_actions_token', sanitize_text_field($_POST['github_actions_token']));
     }
@@ -76,10 +77,10 @@ function github_actions_save_settings() {
 }
 
 // GitHub Actions設定ページの保存アクションフック
-add_action('admin_init', 'github_actions_save_settings');
+add_action('admin_init', 'scga_github_actions_save_settings');
 
 // 設定の初期化
-function github_actions_initialize_settings() {
+function scga_github_actions_initialize_settings() {
     add_option('github_username', '');
     add_option('github_repo', '');
     add_option('github_actions_token', '');
@@ -87,7 +88,7 @@ function github_actions_initialize_settings() {
 }
 
 // 設定の削除
-function github_actions_delete_settings() {
+function scga_github_actions_delete_settings() {
     delete_option('github_username');
     delete_option('github_repo');
     delete_option('github_actions_token');
@@ -95,13 +96,13 @@ function github_actions_delete_settings() {
 }
 
 // プラグインが有効化されたときに初期化
-register_activation_hook(__FILE__, 'github_actions_initialize_settings');
+register_activation_hook(__FILE__, 'scga_github_actions_initialize_settings');
 
 // プラグインが無効化されたときに設定を削除
-register_deactivation_hook(__FILE__, 'github_actions_delete_settings');
+register_deactivation_hook(__FILE__, 'scga_github_actions_delete_settings');
 
 // 設定のセクションとフィールドを追加
-function github_actions_settings_init() {
+function scga_github_actions_settings_init() {
     register_setting('github-actions-settings-group', 'github_username');
     register_setting('github-actions-settings-group', 'github_repo');
     register_setting('github-actions-settings-group', 'github_actions_token');
@@ -109,4 +110,4 @@ function github_actions_settings_init() {
 }
 
 // 設定のセクションとフィールドを登録
-add_action('admin_init', 'github_actions_settings_init');
+add_action('admin_init', 'scga_github_actions_settings_init');

@@ -1,4 +1,4 @@
-=== SC GitHub Actions ===
+=== SCGA GitHub Actions ===
 Contributors: hiroghap1
 Tags: github, githubactions
 Requires at least: 6.4

@@ -1,1 +1,1 @@
-# SC GitHub Actions
+# SCGA GitHub Actions
