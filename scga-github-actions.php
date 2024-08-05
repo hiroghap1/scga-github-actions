@@ -12,8 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 function scga_load_github_actions_script() {
     // メニューページ 'github-actions' でのみスクリプトをロード
     if (isset($_GET['page']) && $_GET['page'] === 'github-actions') {
-        wp_enqueue_style('github-actions-style', plugin_dir_url(__FILE__) . 'css/github-actions-style.css');
-        wp_enqueue_script('github-actions-script', plugin_dir_url(__FILE__) . 'js/github-actions-script.js', array(), null, true);
+        wp_enqueue_style('scga-github-actions-style', plugin_dir_url(__FILE__) . 'css/github-actions-style.css');
+        wp_enqueue_script('scga-github-actions-script', plugin_dir_url(__FILE__) . 'js/github-actions-script.js', array(), null, true);
     }
 }
 add_action('admin_enqueue_scripts', 'scga_load_github_actions_script');
@@ -25,13 +25,13 @@ function scga_add_github_actions_menu() {
         'GitHub Actions',
         'manage_options',
         'github-actions',
-        'github_actions_settings_page'
+        'scga_github_actions_settings_page'
     );
 }
 // メニューを追加するアクションフック
 add_action('admin_menu', 'scga_add_github_actions_menu');
 
-function github_actions_settings_page() {
+function scga_github_actions_settings_page() {
     ?>
     <div class="wrap">
         <h1>GitHub Actions を実行します</h1>
@@ -41,24 +41,24 @@ function github_actions_settings_page() {
         <hr>
         <h2>GitHub 設定</h2>
         <form method="post" action="options.php">
-            <?php settings_fields('github-actions-settings-group'); ?>
-            <?php do_settings_sections('github-actions-settings-group'); ?>
+            <?php settings_fields('scga-github-actions-settings-group'); ?>
+            <?php do_settings_sections('scga-github-actions-settings-group'); ?>
             
             <!-- GitHubユーザーネーム入力 -->
             <label for="github-username">GitHub Username:</label>
-            <input type="text" id="github-username" name="github_username" value="<?php echo esc_attr(get_option('github_username')); ?>">
+            <input type="text" id="github-username" name="github_username" value="<?php echo esc_attr(get_option('scga_github_username')); ?>">
 
             <!-- リポジトリの入力 -->
             <label for="github-repo">GitHub Repository:</label>
-            <input type="text" id="github-repo" name="github_repo" value="<?php echo esc_attr(get_option('github_repo')); ?>">
+            <input type="text" id="github-repo" name="github_repo" value="<?php echo esc_attr(get_option('scga_github_repo')); ?>">
 
             <!-- トークンの入力 -->
             <label for="github-actions-token">GitHub Token(classic):</label>
-            <input type="password" id="github-actions-token" name="github_actions_token" value="<?php echo esc_attr(get_option('github_actions_token')); ?>">
+            <input type="password" id="github-actions-token" name="github_actions_token" value="<?php echo esc_attr(get_option('scga_github_actions_token')); ?>">
 
             <!-- workflowの実行ファイル名の入力 -->
             <label for="github-actions-file">Workflow file name:</label>
-            <input type="text" id="github-actions-file" name="github_actions_file" value="<?php echo esc_attr(get_option('github_actions_file')); ?>">
+            <input type="text" id="github-actions-file" name="github_actions_file" value="<?php echo esc_attr(get_option('scga_github_actions_file')); ?>">
 
             <?php submit_button('設定を保存'); ?>
         </form>
@@ -68,11 +68,11 @@ function github_actions_settings_page() {
 
 // GitHub Actions設定ページでの保存処理
 function scga_github_actions_save_settings() {
-    if (isset($_POST['github_actions_token'])) {
-        update_option('github_actions_token', sanitize_text_field($_POST['github_actions_token']));
+    if (isset($_POST['scga_github_actions_token'])) {
+        update_option('scga_github_actions_token', sanitize_text_field($_POST['scga_github_actions_token']));
     }
-    if (isset($_POST['github_actions_file'])) {
-        update_option('github_actions_file', sanitize_text_field($_POST['github_actions_file']));
+    if (isset($_POST['scga_github_actions_file'])) {
+        update_option('scga_github_actions_file', sanitize_text_field($_POST['scga_github_actions_file']));
     }
 }
 
@@ -81,18 +81,18 @@ add_action('admin_init', 'scga_github_actions_save_settings');
 
 // 設定の初期化
 function scga_github_actions_initialize_settings() {
-    add_option('github_username', '');
-    add_option('github_repo', '');
-    add_option('github_actions_token', '');
-    add_option('github_actions_file', ''); // 新しく追加したフィールド
+    add_option('scga_github_username', '');
+    add_option('scga_github_repo', '');
+    add_option('scga_github_actions_token', '');
+    add_option('scga_github_actions_file', ''); // 新しく追加したフィールド
 }
 
 // 設定の削除
 function scga_github_actions_delete_settings() {
-    delete_option('github_username');
-    delete_option('github_repo');
-    delete_option('github_actions_token');
-    delete_option('github_actions_file');
+    delete_option('scga_github_username');
+    delete_option('scga_github_repo');
+    delete_option('scga_github_actions_token');
+    delete_option('scga_github_actions_file');
 }
 
 // プラグインが有効化されたときに初期化
@@ -103,10 +103,10 @@ register_deactivation_hook(__FILE__, 'scga_github_actions_delete_settings');
 
 // 設定のセクションとフィールドを追加
 function scga_github_actions_settings_init() {
-    register_setting('github-actions-settings-group', 'github_username');
-    register_setting('github-actions-settings-group', 'github_repo');
-    register_setting('github-actions-settings-group', 'github_actions_token');
-    register_setting('github-actions-settings-group', 'github_actions_file');
+    register_setting('scga_github-actions-settings-group', 'scga_github_username');
+    register_setting('scga_github-actions-settings-group', 'scga_github_repo');
+    register_setting('scga_github-actions-settings-group', 'scga_github_actions_token');
+    register_setting('scga_github-actions-settings-group', 'scga_github_actions_file');
 }
 
 // 設定のセクションとフィールドを登録
